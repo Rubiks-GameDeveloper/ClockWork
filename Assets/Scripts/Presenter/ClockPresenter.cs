@@ -1,23 +1,18 @@
-using System;
-using System.Collections;
+using Model;
 using UnityEngine;
+using View;
 
-public abstract class ClockPresenter : MonoBehaviour
+namespace Presenter
 {
-    private ClockView _clockView;
-    private ClockModel _clockModel;
-    
-    public void SetView(ClockView clockView) => _clockView = clockView;
-    public ClockView GetView() => _clockView;
-    
-    public void SetModel(ClockModel clockModel) => _clockModel = clockModel;
-    public ClockModel GetModel() => _clockModel;
-    public void Init(ClockView view, ClockModel model)
+    public abstract class ClockPresenter : MonoBehaviour
     {
-        _clockView = view;
-        _clockModel = model;
+        protected ClockView ClockView { get; private set; }
+        protected ClockModel ClockModel { get; private set; }
+        public void Init(ClockView view, ClockModel model)
+        {
+            ClockView = view;
+            ClockModel = model;
+        }
+        public abstract void TimeSync();
     }
-
-    public abstract void FirstSync(DateTime dateTime);
-    public abstract IEnumerator ClockTicking(DateTime dateTime);
 }

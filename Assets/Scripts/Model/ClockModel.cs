@@ -1,28 +1,21 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+using Presenter;
+using View;
 
-public abstract class ClockModel
+namespace Model
 {
-    public delegate void DataSync(DateTime dateTime);
-
-    public DataSync dataSync;
-    private ClockPresenter _presenter;
-    private ClockView _view;
-    private DateTime _dateTime;
-
-    public ClockView GetView() => _view;
-    public ClockPresenter GetPresenter() => _presenter;
-    public void SetDateTime(DateTime dateTime) => _dateTime = dateTime;
-    public DateTime GetDateTime() => _dateTime;
-    public ClockModel(ClockPresenter presenter, ClockView view)
+    public abstract class ClockModel
     {
-        _presenter = presenter;
-        _view = view;
-        dataSync = presenter.FirstSync;
-    }
+        protected ClockPresenter Presenter { get; private set; }
+        public ClockView View { get; private set; }
+        public DateTime DateTime { get; set; }
 
-    public abstract IEnumerator GetUnixTimeNTP();
+        protected ClockModel(ClockPresenter presenter, ClockView view)
+        {
+            Presenter = presenter;
+            View = view;
+        }
+        public abstract IEnumerator DOGetUnixTimeNtp();
+    }
 }

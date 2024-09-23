@@ -1,31 +1,26 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Presenter;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
-public abstract class ClockView
+namespace View
 {
-    private Transform _hourArrow;
-    private Transform _minuteArrow;
-    private ClockPresenter _presenter;
-
-    public Transform GetHourArrow()
+    public abstract class ClockView
     {
-        return _hourArrow;
-    }
-    public Transform GetMinuteArrow()
-    {
-        return _minuteArrow;
-    }
+        protected Transform HourArrow { get; private set; }
+        protected Transform MinuteArrow { get; private set; }
+        protected TextMeshProUGUI DigitalClock { get; private set; }
+        private ClockPresenter _presenter;
 
-    public ClockView(ClockPresenter presenter, Transform hourArrow, Transform minuteArrow)
-    {
-        _presenter = presenter;
+        protected ClockView(ClockPresenter presenter, Transform hourArrow, Transform minuteArrow, TextMeshProUGUI digitalClock)
+        {
+            _presenter = presenter;
 
-        _hourArrow = hourArrow;
-        _minuteArrow = minuteArrow;
+            HourArrow = hourArrow;
+            MinuteArrow = minuteArrow;
+            DigitalClock = digitalClock;
+        }
+
+        public abstract void SetTime(DateTime time, float duration);
     }
-
-    public abstract void SetTime(DateTime time, float duration);
 }

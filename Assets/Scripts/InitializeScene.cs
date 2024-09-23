@@ -1,25 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+using Model;
+using Presenter;
+using TMPro;
 using UnityEngine;
+using View;
 
 public class InitializeScene : MonoBehaviour
 {
     [SerializeField] private Transform hourArrow;
     [SerializeField] private Transform minuteArrow;
+    [SerializeField] private TextMeshProUGUI digitalClock;
 
-    // Start is called before the first frame update
     private void Start()
     {
         var presenter = FindObjectOfType<ClockPresenter>();
-        var view = new TimeClockView(presenter, hourArrow, minuteArrow);
+        var view = new TimeClockView(presenter, hourArrow, minuteArrow, digitalClock);
         var model = new TimeDataModel(presenter, view);
         presenter.Init(view, model);
-        StartCoroutine(model.GetUnixTimeNTP());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        StartCoroutine(model.DOGetUnixTimeNtp());
     }
 }
